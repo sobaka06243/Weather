@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Загрузка";
+}
+
+<h3>Выберите файлы для загрузки</h3>
+<form asp-controller="LoadArchive" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input class="form-control-file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="uploadedFile" multiple />
+    </div>
+    <div class="form-group mt-2">
+        <input  type="submit" value="Загрузить" class="btn btn-primary" />
+    </div>
+</form>
