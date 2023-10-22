@@ -1,29 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using Weather.Services.Services;
 
-namespace Weather.MVC.Controllers
+namespace Weather.MVC.Controllers;
+
+public class LoadArchiveController : Controller
 {
-    public class LoadArchiveController : Controller
+    private readonly IWeatherParser _weatherParser;
+
+    public LoadArchiveController(IWeatherParser weatherParser)
     {
-        // GET: LoadArchiveController
-        public ActionResult Index()
+        _weatherParser = weatherParser;
+    }
+
+    public ActionResult Index()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> Create(IFormCollection collection)
+    {
+        try
+        {
+            foreach (var file in collection.Files)
+            {
+                using var stream = file.OpenReadStream();
+                await _weatherParser.Parse(stream);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        catch
         {
             return View();
-        }
-
-        // POST: LoadArchiveController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
