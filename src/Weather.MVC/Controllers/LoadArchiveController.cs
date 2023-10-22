@@ -21,14 +21,14 @@ public class LoadArchiveController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(IFormCollection collection)
+    public ActionResult Create(IFormCollection collection)
     {
         try
         {
             foreach (var file in collection.Files)
             {
                 using var stream = file.OpenReadStream();
-                await _weatherParser.Parse(stream);
+                _weatherParser.Parse(stream);
             }
             return RedirectToAction(nameof(Index));
         }

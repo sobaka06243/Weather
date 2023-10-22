@@ -11,10 +11,10 @@ public class WeatherData
         int relativeHumidity, 
         float dewPoint, 
         int atmospherePressure,
-        string windDirection,
-        int windSpeed,
+        string? windDirection,
+        int? windSpeed,
         int? cloudiness,
-        int cloudBase,
+        int? cloudBase,
         int? horizontalVisibility,
         string? weatherConditions)
     {
@@ -44,13 +44,13 @@ public class WeatherData
 
     public int AtmospherePressure { get; }
 
-    public string WindDirection { get; }
+    public string? WindDirection { get; }
 
-    public int WindSpeed { get; }
+    public int? WindSpeed { get; }
 
     public int? Cloudiness { get; }
 
-    public int CloudBase { get; }
+    public int? CloudBase { get; }
 
     public int? HorizontalVisibility { get; }
 
