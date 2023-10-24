@@ -13,10 +13,23 @@ public class WeatherParser : IWeatherParser
     public IEnumerable<WeatherData> Parse(Stream stream)
     {
         List<WeatherData> data = new List<WeatherData>();
-        var workbook = new XSSFWorkbook(stream);
-        ISheet sheet = workbook.GetSheetAt(0);
+        XSSFWorkbook workbook;
+        ISheet sheet;
+        try
+        {
+            workbook = new XSSFWorkbook(stream);
+            sheet = workbook.GetSheetAt(0);
+        }
+        catch
+        {
+            throw new InvalidOperationException("Incorrect file");
+        }
         int i = 4;
         IRow row = sheet.GetRow(i);
+        if (row is null)
+        {
+            throw new InvalidOperationException("Incorrect file");
+        }
         while (row is not null)
         {
             data.Add(CreateWeatherData(row));
