@@ -45,7 +45,7 @@ public class WeatherParser : IWeatherParser
         int i = 0;
         try
         {
-            var date = DateOnly.Parse(GetCell(row, ref i).StringCellValue);
+            var date = DateOnly.ParseExact(GetCell(row, ref i).StringCellValue, "dd.MM.yyyy");
             var time = TimeOnly.Parse(GetCell(row, ref i).StringCellValue);
             var temp = (float)GetCell(row, ref i).NumericCellValue;
             var relativeHumidity = (int)GetCell(row, ref i).NumericCellValue;
